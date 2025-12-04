@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('visi_misi_prodis', function (Blueprint $table) {
             $table->id();
-            $table->text('visi');
-            $table->text('misi');
+            $table->text('visimisi');
+            $table->enum("jenis", ["visi", "misi"]);
+            $table->text('file_path')->nullable();
+            $table->date('berlaku_sampai')->nullable();
             $table->timestamps();
         });
     }
