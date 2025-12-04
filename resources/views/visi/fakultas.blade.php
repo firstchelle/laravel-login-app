@@ -15,7 +15,7 @@
                         @if (Auth::user()->role == 'dekan')
                             <a href="{{ route('visifakultas.create') }}"
                                 class="px-4 py-2 bg-blue-500 text-white font-bold rounded-md w-fit">
-                                Tambah Visi Fakultas
+                                Tambah Visi Misi Fakultas
                             </a>
                         @endif
                     </div>
@@ -50,97 +50,59 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-white">
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        1
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Menjadi Perguruan Tinggi Terkemuka Dibidang Ekonomi, Bisnis,sains dan Teknologi
-                                        Berbasis ekonomi Digital dan Technopreneur Berdaya Saing Nasional dan
-                                        Internasional
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <p class="px-4 py-1 bg-purple-500 rounded-full inline-block">visi.pdf</p>
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        28/10/2025
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Dekan
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <div class="flex space-x-2">
+                                @foreach ($data_visi as $dt)
+                                    <tr class="bg-white">
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            {{ $loop->iteration }}
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            {{ $dt->visimisi }}
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            <a href="{{ asset('storage/' . $dt->file_path) }}" target="_blank"
+                                                class="px-4 py-1 bg-purple-500 rounded-full inline-block text-white">visi_{{ $loop->iteration }}.pdf
+                                            </a>
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            {{ $dt->berlaku_sampai }}
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            Dekan
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            <div class="flex space-x-2">
 
-                                            <a href="{{ route('misifakultas.edit', 1) }}"
-                                                class=" 
+                                                <a href="{{ route('visifakultas.edit', $dt->id) }}"
+                                                    class=" 
         @if (auth()->user()->role !== 'dekan') pointer-events-none opacity-50 cursor-not-allowed @endif
     ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </a>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24"
+                                                        stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </a>
 
-                                            {{-- Tombol Delete --}}
-                                            <button @disabled(auth()->user()->role !== 'dekan')
-                                                class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="bg-white">
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        2
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Mewujudkan mahasiswa yang unggul dalam akademik, inovatif, dan berdaya saing
-                                        global.
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <p class="px-4 py-1 bg-purple-500 rounded-full inline-block">visi.pdf</p>
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        28/10/2025
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Dekan
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <div class="flex space-x-2">
-
-                                            <a href="{{ route('misifakultas.edit', 1) }}"
-                                                class=" 
-        @if (auth()->user()->role !== 'dekan') pointer-events-none opacity-50 cursor-not-allowed @endif
-    ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </a>
-
-                                            {{-- Tombol Delete --}}
-                                            <button @disabled(auth()->user()->role !== 'dekan')
-                                                class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                {{-- Delete Button --}}
+                                                <form action="{{ route('visifakultas.destroy', $dt->id) }}"
+                                                    method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="button" @disabled(auth()->user()->role !== 'dekan')
+                                                        class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-6 w-6 text-red-500" fill="none"
+                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -148,15 +110,7 @@
 
                 {{-- Misi --}}
                 <div class="w-full h-auto p-4 sm:p-8 rounded-md space-y-4">
-                    <div class="flex flex-col gap-4">
-                        <p class="text-2xl sm:text-4xl font-bold">MISI</p>
-                        @if (Auth::user()->role == 'dekan')
-                            <a href="{{ route('misifakultas.create') }}"
-                                class="px-4 py-2 bg-blue-500 text-white font-bold rounded-md w-fit">
-                                Tambah Misi Fakultas
-                            </a>
-                        @endif
-                    </div>
+                    <p class="text-2xl sm:text-4xl font-bold">MISI</p>
                     <div class="overflow-x-auto">
                         <table class="min-w-full border-collapse">
                             <thead>
@@ -188,191 +142,99 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-white">
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        1
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Menyelenggarakan tridharma perguruan tinggi secara konsisten dan berkelanjutan
-                                        sesuai Standar Nasional Pendidikan Tinggi.
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <p class="px-4 py-1 bg-purple-500 rounded-full inline-block">misi.pdf</p>
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        28/10/2025
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Dekan
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <div class="flex space-x-2">
+                                @foreach ($data_misi as $dt)
+                                    <tr class="bg-white">
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            {{ $loop->iteration }}
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            {{ $dt->visimisi }}
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            <a href="{{ asset('storage/' . $dt->file_path) }}" target="_blank"
+                                                class="px-4 py-1 bg-purple-500 rounded-full inline-block text-white">misi_{{ $loop->iteration }}.pdf
+                                            </a>
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            {{ $dt->berlaku_sampai }}
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            Dekan
+                                        </td>
+                                        <td class="p-2 border border-gray-300 text-left">
+                                            <div class="flex space-x-2">
 
-                                            {{-- Tombol Edit --}}
-                                            <a href="{{ route('misifakultas.edit', 1) }}"
-                                                class=" 
+                                                <a href="{{ route('visifakultas.edit', $dt->id) }}"
+                                                    class=" 
         @if (auth()->user()->role !== 'dekan') pointer-events-none opacity-50 cursor-not-allowed @endif
     ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </a>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24"
+                                                        stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </a>
 
-                                            {{-- Tombol Delete --}}
-                                            <button @disabled(auth()->user()->role !== 'dekan')
-                                                class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="bg-white">
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        2
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Mentransformasikan perkembangan teknologi digital dalam kegiatan tridharma
-                                        perguruan tinggi serta mendorong jiwa technopreneur.
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <p class="px-4 py-1 bg-purple-500 rounded-full inline-block">misi.pdf</p>
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        28/10/2025
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Dekan
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <div class="flex space-x-2">
-
-                                            <a href="{{ route('misifakultas.edit', 1) }}"
-                                                class=" 
-        @if (auth()->user()->role !== 'dekan') pointer-events-none opacity-50 cursor-not-allowed @endif
-    ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </a>
-
-                                            {{-- Tombol Delete --}}
-                                            <button @disabled(auth()->user()->role !== 'dekan')
-                                                class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="bg-white">
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        3
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Mengembangkan kegiatan akademik dan non akademik yang mampu menghasilkan
-                                        sumberdaya manusia yang memiliki kecerdasan holistik
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <p class="px-4 py-1 bg-purple-500 rounded-full inline-block">misi.pdf</p>
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        28/10/2025
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        Dekan
-                                    </td>
-                                    <td class="p-2 border border-gray-300 text-left">
-                                        <div class="flex space-x-2">
-
-                                            <a href="{{ route('misifakultas.edit', 1) }}"
-                                                class=" 
-        @if (auth()->user()->role !== 'dekan') pointer-events-none opacity-50 cursor-not-allowed @endif
-    ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </a>
-
-                                            {{-- Tombol Delete --}}
-                                            <button @disabled(auth()->user()->role !== 'dekan')
-                                                class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                {{-- Delete Button --}}
+                                                <form action="{{ route('visifakultas.destroy', $dt->id) }}"
+                                                    method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="button" @disabled(auth()->user()->role !== 'dekan')
+                                                        class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-6 w-6 text-red-500" fill="none"
+                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                {{-- Confirmation Delete --}}
                 <script>
                     (function() {
-                        function handleClick(event) {
-                            // If button is disabled, do nothing
-                            if (event.currentTarget.disabled) return;
+                        function handleDeleteClick(event) {
+                            const btn = event.currentTarget;
 
-                            var ok = confirm('Apakah anda yakin ingin menghapus item ini?');
-                            if (!ok) {
+                            // Jika tombol disabled (dari Blade)
+                            if (btn.hasAttribute('disabled')) {
                                 event.preventDefault();
-                                event.stopPropagation();
                                 return false;
                             }
 
-                            // If the button is inside a form, submit the form
-                            var btn = event.currentTarget;
-                            var form = btn.closest('form');
+                            // Konfirmasi
+                            const ok = confirm('Apakah anda yakin ingin menghapus item ini?');
+                            if (!ok) {
+                                event.preventDefault();
+                                return false;
+                            }
+
+                            // Jika ada form induk → submit form
+                            const form = btn.closest('form');
                             if (form) {
+                                event.preventDefault();
                                 form.submit();
                                 return true;
                             }
 
-                            // If button has data-url, navigate to it (GET)
-                            var url = btn.getAttribute('data-url') || btn.getAttribute('data-href');
-                            if (url) {
-                                window.location.href = url;
-                                return true;
-                            }
-
-                            // Otherwise allow default behavior (in case other handlers exist)
                             return true;
                         }
 
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var delBtns = document.querySelectorAll('button.confirm-delete');
-                            delBtns.forEach(function(b) {
-                                b.addEventListener('click', handleClick, {
-                                    capture: false
-                                });
-                            });
+                        document.addEventListener('DOMContentLoaded', () => {
+                            document.querySelectorAll('button.confirm-delete')
+                                .forEach(btn => btn.addEventListener('click', handleDeleteClick));
                         });
                     })();
                 </script>
-
             </div>
         </div>
     </div>

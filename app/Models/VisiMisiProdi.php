@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class VisiMisiProdi extends Model
 {
-    //
+    protected $table = 'visi_misi_prodis';
+    protected $fillable = ['visimisi', 'jenis', 'file_path', 'berlaku_sampai'];
 }

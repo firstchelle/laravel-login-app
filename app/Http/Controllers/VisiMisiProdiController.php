@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VisiMisiProdi; // <-- WAJIB TAMBAHKAN
+use Illuminate\Support\Facades\Storage;
 
 class VisiMisiProdiController extends Controller
 {
@@ -12,66 +13,74 @@ class VisiMisiProdiController extends Controller
      */
     public function index()
     {
-        $data = VisiMisiProdi::all();
-        return view('visi.prodi', compact('data'));
+        $data_visi = VisiMisiProdi::where('jenis', 'visi')->get();
+        $data_misi = VisiMisiProdi::where('jenis', 'misi')->get();
+        return view('visi.prodi', compact('data_visi', 'data_misi'));
     }
 
-    public function createmisi()
-    {
-        return view('visi.prodi.createmisiprodi');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('visi.prodi.createvisiprodi');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        VisiMisiProdi::create($request->all());
-        return redirect()->route('visi.prodi');
+        $validate = $request->validate([
+            'visimisi' => 'required|string',
+            'jenis' => 'required|in:visi,misi',
+            'dokumen' => 'nullable|mimes:pdf|max:2048',
+            'berlaku_sampai' => 'nullable|date',
+        ]);
+
+        // nama dokumen
+        $path = $request->file('dokumen')?->store('dokumen', 'public');
+        $validate['file_path'] = $path;
+
+        VisiMisiProdi::create($validate);
+        return redirect()->route('visiprodi.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
         $item = VisiMisiProdi::findOrFail($id);
         return view('visi.prodi.editvisiprodi', compact('item'));
     }
 
-    public function editmisi(string $id)
+    public function update(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'visimisi' => 'required|string',
+            'jenis' => 'required|in:visi,misi',
+            'dokumen' => 'nullable|mimes:pdf|max:2048',
+            'berlaku_sampai' => 'nullable|date',
+        ]);
+
+        $item = VisiMisiProdi::findOrFail($id);
+
+        // Jika ada file baru diupload
+        if ($request->hasFile('dokumen')) {
+
+            if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
+                Storage::disk('public')->delete($item->file_path);
+            }
+
+            $path = $request->file('dokumen')->store('dokumen', 'public');
+            $validate['file_path'] = $path;
+        }
+
+        $item->update($validate);
+        return redirect()->route('visiprodi.index');
+    }
+
+    public function destroy($id)
     {
         $item = VisiMisiProdi::findOrFail($id);
-        return view('visi.prodi.editmisiprodi', compact('item'));
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        VisiMisiProdi::findOrFail($id)->update($request->all());
-        return redirect()->route('visi.prodi');
-    }
+        if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
+            Storage::disk('public')->delete($item->file_path);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        VisiMisiProdi::findOrFail($id)->delete();
-        return redirect()->route('visi.prodi');
+        $item->delete();
+        return redirect()->route('visiprodi.index');
     }
 }

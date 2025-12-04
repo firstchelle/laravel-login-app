@@ -59,8 +59,8 @@
                         <div class="flex flex-row justify-between w-full h-auto items-center">
                             <button type="submit"
                                 class="px-4 py-2 bg-blue-500 text-white font-bold rounded-md w-fit">Tambah</button>
-                            <button type="submit"
-                                class="px-4 py-2 bg-slate-500 text-white font-bold rounded-md w-fit">Kembali</button>
+                            <a href="{{ route('visiinstitusi.index') }}" type="submit"
+                                class="px-4 py-2 bg-slate-500 text-white font-bold rounded-md w-fit">Kembali</a>
                         </div>
                     </form>
                 </div>
