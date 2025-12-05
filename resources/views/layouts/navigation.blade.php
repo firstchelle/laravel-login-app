@@ -26,10 +26,10 @@
                         <!-- Submenu -->
                         <div x-show="submenuOpen" x-transition
                             class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 top-12">
-                            <a href="{{ route('visifakultas.index') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Fakultas') }}</a>
                             <a href="{{ route('visiinstitusi.index') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Institusi') }}</a>
+                            <a href="{{ route('visifakultas.index') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Fakultas') }}</a>
                             <a href="{{ route('visiprodi.index') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Prodi') }}</a>
                         </div>
