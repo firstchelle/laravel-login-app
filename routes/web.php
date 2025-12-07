@@ -23,25 +23,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/visiprodi', [VisiMisiProdiController::class, 'index'])->name('visiprodi.index');
 
     // VISI MISI INSTITUSI
-    Route::get('/visiinstitusi/create', [VisiMisiInstitusiController::class, 'create'])->name('visiinstitusi.create');
-    Route::post('/visiinstitusi/store', [VisiMisiInstitusiController::class, 'store'])->name('visiinstitusi.store');
-    Route::get('/visiinstitusi/{id}/edit', [VisiMisiInstitusiController::class, 'edit'])->name('visiinstitusi.edit');
-    Route::patch('/visiinstitusi/{id}/update', [VisiMisiInstitusiController::class, 'update'])->name('visiinstitusi.update');
-    Route::delete('/visiinstitusi/{id}/destroy', [VisiMisiInstitusiController::class, 'destroy'])->name('visiinstitusi.destroy');
+    Route::group(['middleware' => ['role:rektor']], function () {
+        Route::get('/visiinstitusi/create', [VisiMisiInstitusiController::class, 'create'])->name('visiinstitusi.create');
+        Route::post('/visiinstitusi/store', [VisiMisiInstitusiController::class, 'store'])->name('visiinstitusi.store');
+        Route::get('/visiinstitusi/{id}/edit', [VisiMisiInstitusiController::class, 'edit'])->name('visiinstitusi.edit');
+        Route::patch('/visiinstitusi/{id}/update', [VisiMisiInstitusiController::class, 'update'])->name('visiinstitusi.update');
+        Route::delete('/visiinstitusi/{id}/destroy', [VisiMisiInstitusiController::class, 'destroy'])->name('visiinstitusi.destroy');
+    });
 
-    // VISI FAKULTAS
-    Route::get('/visifakultas/create', [VisiMisiFakultasController::class, 'create'])->name('visifakultas.create');
-    Route::post('/visifakultas/store', [VisiMisiFakultasController::class, 'store'])->name('visifakultas.store');
-    Route::get('/visifakultas/{id}/edit', [VisiMisiFakultasController::class, 'edit'])->name('visifakultas.edit');
-    Route::patch('/visifakultas/{id}/update', [VisiMisiFakultasController::class, 'update'])->name('visifakultas.update');
-    Route::delete('/visifakultas/{id}/destroy', [VisiMisiFakultasController::class, 'destroy'])->name('visifakultas.destroy');
+    // VISI MISI FAKULTAS
+    Route::group(['middleware' => ['role:dekan']], function () {
+        Route::get('/visifakultas/create', [VisiMisiFakultasController::class, 'create'])->name('visifakultas.create');
+        Route::post('/visifakultas/store', [VisiMisiFakultasController::class, 'store'])->name('visifakultas.store');
+        Route::get('/visifakultas/{id}/edit', [VisiMisiFakultasController::class, 'edit'])->name('visifakultas.edit');
+        Route::patch('/visifakultas/{id}/update', [VisiMisiFakultasController::class, 'update'])->name('visifakultas.update');
+        Route::delete('/visifakultas/{id}/destroy', [VisiMisiFakultasController::class, 'destroy'])->name('visifakultas.destroy');
+    });
 
-    // VISI PRODI
-    Route::get('/visiprodi/create', [VisiMisiProdiController::class, 'create'])->name('visiprodi.create');
-    Route::post('/visiprodi/store', [VisiMisiProdiController::class, 'store'])->name('visiprodi.store');
-    Route::get('/visiprodi/{id}/edit', [VisiMisiProdiController::class, 'edit'])->name('visiprodi.edit');
-    Route::patch('/visiprodi/{id}/update', [VisiMisiProdiController::class, 'update'])->name('visiprodi.update');
-    Route::delete('/visiprodi/{id}/destroy', [VisiMisiProdiController::class, 'destroy'])->name('visiprodi.destroy');
+    // VISI MISI PRODI
+    Route::group(['middleware' => ['role:kaprodi']], function () {
+        Route::get('/visiprodi/create', [VisiMisiProdiController::class, 'create'])->name('visiprodi.create');
+        Route::post('/visiprodi/store', [VisiMisiProdiController::class, 'store'])->name('visiprodi.store');
+        Route::get('/visiprodi/{id}/edit', [VisiMisiProdiController::class, 'edit'])->name('visiprodi.edit');
+        Route::patch('/visiprodi/{id}/update', [VisiMisiProdiController::class, 'update'])->name('visiprodi.update');
+        Route::delete('/visiprodi/{id}/destroy', [VisiMisiProdiController::class, 'destroy'])->name('visiprodi.destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';
