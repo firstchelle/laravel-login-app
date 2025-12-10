@@ -10,30 +10,42 @@ class VisiMisiInstitusiController extends Controller
 {
     public function index()
     {
-        $data_visi = VisiMisiInstitusi::where('jenis', 'visi')->get();
-        $data_misi = VisiMisiInstitusi::where('jenis', 'misi')->get();
-        return view('visi.institusi', compact('data_visi', 'data_misi'));
+        $data_visi = VisiMisiInstitusi::where('jenis', 'visi')->with("children")->get();
+        return view('visi.institusi', compact('data_visi'));
     }
 
     public function create()
     {
-        return view('visi.institusi.createvisiinstitusi');
+        $data_misi = VisiMisiInstitusi::where('jenis', 'misi')->get();
+        return view('visi.institusi.createvisiinstitusi', compact('data_misi'));
     }
 
     public function store(Request $request)
     {
+        // Validate VISI
         $validate = $request->validate([
             'visimisi' => 'required|string',
             'jenis' => 'required|in:visi,misi',
             'dokumen' => 'nullable|mimes:pdf|max:2048',
             'berlaku_sampai' => 'nullable|date',
+            'misi_ids' => 'nullable|array',
         ]);
 
-        // nama dokumen
+        // Upload dokumen
         $path = $request->file('dokumen')?->store('dokumen', 'public');
         $validate['file_path'] = $path;
 
-        VisiMisiInstitusi::create($validate);
+        $visi = VisiMisiInstitusi::create($validate);
+
+        // Simpan relasi misi → visi
+        if ($request->filled('misi_ids')) {
+            foreach ($request->misi_ids as $mid) {
+                VisiMisiInstitusi::where('id', $mid)->update([
+                    'parent_id' => $visi->id
+                ]);
+            }
+        }
+
         return redirect()->route('visiinstitusi.index');
     }
 
@@ -50,6 +62,7 @@ class VisiMisiInstitusiController extends Controller
             'jenis' => 'required|in:visi,misi',
             'dokumen' => 'nullable|mimes:pdf|max:2048',
             'berlaku_sampai' => 'nullable|date',
+            'parent_id' => 'nullable|exists:visi_misi_institusis,id',
         ]);
 
         $item = VisiMisiInstitusi::findOrFail($id);
@@ -79,5 +92,29 @@ class VisiMisiInstitusiController extends Controller
 
         $item->delete();
         return redirect()->route('visiinstitusi.index');
+    }
+
+    public function storeMisiAjax(Request $request)
+    {
+        $validate = $request->validate([
+            'visimisi' => 'required|string',
+        ]);
+
+        $data = VisiMisiInstitusi::create([
+            'visimisi' => $validate['visimisi'],
+            'jenis' => 'misi'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function getAllMisi()
+    {
+        return VisiMisiInstitusi::where('jenis', 'misi')
+            ->select('id', 'visimisi')
+            ->get();
     }
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->enum("jenis", ["visi", "misi"]);
             $table->text('file_path')->nullable();
             $table->date('berlaku_sampai')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('visi_misi_institusis')->onDelete('set null');
             $table->timestamps();
         });
     }
