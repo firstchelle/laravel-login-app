@@ -51,8 +51,9 @@ class VisiMisiInstitusiController extends Controller
 
     public function edit($id)
     {
-        $item = VisiMisiInstitusi::findOrFail($id);
-        return view('visi.institusi.editvisiinstitusi', compact('item'));
+        $item = VisiMisiInstitusi::with('children')->findOrFail($id);
+        $data_misi = VisiMisiInstitusi::where('jenis', 'misi')->get(); // semua misi
+        return view('visi.institusi.editvisiinstitusi', compact('item', 'data_misi'));
     }
 
     public function update(Request $request, $id)
@@ -62,12 +63,12 @@ class VisiMisiInstitusiController extends Controller
             'jenis' => 'required|in:visi,misi',
             'dokumen' => 'nullable|mimes:pdf|max:2048',
             'berlaku_sampai' => 'nullable|date',
-            'parent_id' => 'nullable|exists:visi_misi_institusis,id',
+            'misi_ids' => 'nullable|array',
         ]);
 
         $item = VisiMisiInstitusi::findOrFail($id);
 
-        // Jika ada file baru diupload
+        // Perbarui file
         if ($request->hasFile('dokumen')) {
 
             if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
@@ -78,9 +79,20 @@ class VisiMisiInstitusiController extends Controller
             $validate['file_path'] = $path;
         }
 
+        // Update data utama
         $item->update($validate);
+
+
+        VisiMisiInstitusi::where('parent_id', $id)->update(['parent_id' => null]);
+
+        if ($request->filled('misi_ids')) {
+            VisiMisiInstitusi::whereIn('id', $request->misi_ids)
+                ->update(['parent_id' => $id]);
+        }
+
         return redirect()->route('visiinstitusi.index');
     }
+
 
     public function destroy($id)
     {
