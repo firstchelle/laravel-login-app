@@ -1,0 +1,68 @@
+[33mcommit 97ea47afdf31b8761d6120de4c541f4b10388111[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtesting[m[33m, [m[1;31morigin/testing[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Thu Dec 11 17:50:49 2025 +0700
+
+    update
+
+[33mcommit 36f6240cda5e6f8546f3565d2c4b9481e0fbf374[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Thu Dec 11 12:33:48 2025 +0700
+
+    update crud institusi
+
+[33mcommit d987d7d7ee1d2dbc16ee8b69464dac7e06ab94c4[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Thu Dec 11 06:21:45 2025 +0700
+
+    update institusi
+
+[33mcommit 43359a041bb17ee7feecd312e17a10cff85c7199[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Sun Dec 7 08:28:33 2025 +0700
+
+    update middleware
+
+[33mcommit ba84b2568fc58fcfd7c5fa83fcabcf6e3dd0ebda[m
+Author: bgsdwiki <bagas.imansyah01@gmail.com>
+Date:   Fri Dec 5 10:51:08 2025 +0700
+
+    Perbaiki tampilan navbar
+
+[33mcommit e1d24c7573119bd4000bf14fcdc726643b2df9c2[m
+Merge: f1339d9 9dc9b41
+Author: bgsdwiki <bagas.imansyah01@gmail.com>
+Date:   Fri Dec 5 10:05:18 2025 +0700
+
+    Merge branch 'main' of https://github.com/firstchelle/laravel-login-app
+
+[33mcommit 9dc9b4112dbb770a219f75cc6adc8d98f2c65c66[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Fri Dec 5 05:02:07 2025 +0700
+
+    update
+
+[33mcommit f1339d9a9c74e830ee07963d173a4d21412dd3d9[m
+Merge: 6356b37 14e9a1a
+Author: bgsdwiki <bagas.imansyah01@gmail.com>
+Date:   Thu Dec 4 12:57:19 2025 +0700
+
+    :wq
+    Merge branch 'main' of https://github.com/firstchelle/laravel-login-app
+
+[33mcommit 6356b3795a9ac118d210e2fa95a8dd69963f40ad[m
+Author: bgsdwiki <bagas.imansyah01@gmail.com>
+Date:   Thu Dec 4 12:57:09 2025 +0700
+
+    update package-lock
+
+[33mcommit 14e9a1a0cf6e1917685e359316e836df660f38db[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Thu Dec 4 07:00:40 2025 +0700
+
+    update institusi
+
+[33mcommit adb119634f56a59c79fdfa512f95c2f1d0907dc1[m
+Author: firstchelle <vionnamichelle@gmail.com>
+Date:   Fri Nov 28 01:39:10 2025 +0700
+
+    update new
