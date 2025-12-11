@@ -54,7 +54,7 @@
                                 {{-- Daftar Misi --}}
                                 <div class="w-1/2 h-auto bg-slate-600 p-4">
                                     <p class="text-white font-bold">Pilih Misi Yang Sudah Ada</p>
-                                    <div id="list_misi" class="max-h-60 overflow-y-auto mt-2">
+                                    <div id="list_misi" class="max-h-40 overflow-y-auto mt-2 scroll-custom">
 
                                         @foreach ($data_misi as $misi)
                                             <div class="flex items-center mb-2 gap-x-4 p-1">
@@ -107,7 +107,7 @@
 
             error.classList.add("hidden");
 
-            fetch("{{ route('misi.ajax.store') }}", {
+            fetch("{{ route('visiinstitusi.misi.ajax.store') }}", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -130,7 +130,7 @@
         }
 
         function refreshMisiList() {
-            fetch("{{ route('api.misi') }}")
+            fetch("{{ route('visiinstitusi.api.misi') }}")
                 .then(res => res.json())
                 .then(data => {
                     let wrapper = document.getElementById("list_misi");

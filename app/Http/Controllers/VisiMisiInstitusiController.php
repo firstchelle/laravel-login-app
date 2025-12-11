@@ -82,7 +82,6 @@ class VisiMisiInstitusiController extends Controller
         // Update data utama
         $item->update($validate);
 
-
         VisiMisiInstitusi::where('parent_id', $id)->update(['parent_id' => null]);
 
         if ($request->filled('misi_ids')) {

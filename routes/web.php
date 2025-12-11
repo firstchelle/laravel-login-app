@@ -21,10 +21,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/visifakultas', [VisiMisiFakultasController::class, 'index'])->name('visifakultas.index');
     Route::get('/visiinstitusi', [VisiMisiInstitusiController::class, 'index'])->name('visiinstitusi.index');
     Route::get('/visiprodi', [VisiMisiProdiController::class, 'index'])->name('visiprodi.index');
-    Route::post('/misi/ajax-store', [VisiMisiInstitusiController::class, 'storeMisiAjax'])
-        ->name('misi.ajax.store');
-    Route::get('/misi/api', [VisiMisiInstitusiController::class, 'getAllMisi'])
-        ->name('api.misi');
+
+    // API VISI MISI INSTITUSI
+    Route::post('/visiinstitusi/misi/ajax-store', [VisiMisiInstitusiController::class, 'storeMisiAjax'])
+        ->name('visiinstitusi.misi.ajax.store');
+    Route::get('/visiinstitusi/misi/api', [VisiMisiInstitusiController::class, 'getAllMisi'])
+        ->name('visiinstitusi.api.misi');
+
+    // API VISI MISI FAKULTAS
+    Route::post('/visifakultas/misi/ajax-store', [VisiMisiFakultasController::class, 'storeMisiAjax'])
+        ->name('visifakultas.misi.ajax.store');
+    Route::get('/visifakultas/misi/api', [VisiMisiFakultasController::class, 'getAllMisi'])
+        ->name('visifakultas.api.misi');
+
+    // API VISI MISI PRODI
+    Route::post('/visiprodi/misi/ajax-store', [VisiMisiProdiController::class, 'storeMisiAjax'])
+        ->name('visiprodi.misi.ajax.store');
+    Route::get('/visiprodi/misi/api', [VisiMisiProdiController::class, 'getAllMisi'])
+        ->name('visiprodi.api.misi');
 
     // VISI MISI INSTITUSI
     Route::group(['middleware' => ['role:rektor']], function () {

@@ -13,7 +13,7 @@
                 @foreach ($data_visi as $visi)
                     <div class="w-full h-auto border border-black flex flex-row p-4 bg-white rounded-lg mb-4">
                         {{-- Left --}}
-                        <div class="w-5/6 h-100 p-4 border-r">
+                        <div class="w-5/6 h-80 overflow-y-auto p-4 border-r scroll-custom">
                             {{-- Visi --}}
                             <div>
                                 <p class="font-bold text-lg mb-2">VISI</p>
@@ -61,11 +61,19 @@
                                     </button>
                                 </form>
                             </div>
-                            <a href=""
-                                class="px-4 py-3 bg-slate-400 font-bold text-white text-center rounded-lg hover:bg-slate-500">Lihat
-                                Detail</a>
+                            <div class="space-y-3 font-bold">
+                                <p>Dokumen</p>
+                                <div>
+                                    @if ($visi->file_path)
+                                        <a href="{{ asset('storage/' . $visi->file_path) }}" target="_blank"
+                                            class="px-4 py-1 bg-purple-500 rounded-full inline-block text-white">visi_{{ $loop->iteration }}.pdf
+                                        </a>
+                                    @else
+                                        <p class="text-red-500">Tidak ada dokumen</p>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
                 @endforeach
             </div>
         </div>

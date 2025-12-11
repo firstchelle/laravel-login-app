@@ -95,7 +95,7 @@
 
             error.classList.add("hidden");
 
-            fetch("{{ route('misi.ajax.store') }}", {
+            fetch("{{ route('visiinstitusi.misi.ajax.store') }}", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -118,7 +118,7 @@
         }
 
         function refreshMisiList() {
-            fetch("{{ route('api.misi') }}")
+            fetch("{{ route('visiinstitusi.api.misi') }}")
                 .then(res => res.json())
                 .then(data => {
                     let wrapper = document.getElementById("list_misi");
