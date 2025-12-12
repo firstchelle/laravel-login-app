@@ -34,6 +34,16 @@
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Prodi') }}</a>
                         </div>
                     </div>
+
+                    <!-- Profil Lulusan Link -->
+                    <x-nav-link :href="route('profil-lulusan.index')" :active="request()->routeIs('profil-lulusan.index')">
+                        {{ __('Profil Lulusan') }}
+                    </x-nav-link>
+
+                    <!-- Capaian Profil Lulusan Link -->
+                    <x-nav-link :href="route('cpl.index')" :active="request()->routeIs('cpl.index')">
+                        {{ __('Capaian Profil Lulusan') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -64,10 +74,8 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                                onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
@@ -104,17 +112,27 @@
                     {{ __('Visi Misi') }}
                 </x-responsive-nav-link>
                 <div class="ml-4 space-y-1">
-                    <x-responsive-nav-link :href="route('visifakultas.index')" :active="request()->routeIs('visifakultas.index')">
-                        {{ __('Fakultas') }}
-                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('visiinstitusi.index')" :active="request()->routeIs('visiinstitusi.index')">
                         {{ __('Institusi') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('visifakultas.index')" :active="request()->routeIs('visifakultas.index')">
+                        {{ __('Fakultas') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('visiprodi.index')" :active="request()->routeIs('visiprodi.index')">
                         {{ __('Prodi') }}
                     </x-responsive-nav-link>
                 </div>
             </div>
+
+            <!-- Profil Lulusan Mobile -->
+            <x-responsive-nav-link :href="route('profil-lulusan.index')" :active="request()->routeIs('profil-lulusan.index')">
+                {{ __('Profil Lulusan') }}
+            </x-responsive-nav-link>
+
+            <!-- Capaian Profil Lulusan Mobile -->
+            <x-responsive-nav-link :href="route('cpl.index')" :active="request()->routeIs('cpl.index')">
+                {{ __('Capaian Profil Lulusan') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -132,10 +150,8 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                        onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>

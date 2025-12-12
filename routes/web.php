@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisiMisiFakultasController;
 use App\Http\Controllers\VisiMisiInstitusiController;
 use App\Http\Controllers\VisiMisiProdiController;
+use App\Http\Controllers\ProfilLulusanController;
+use App\Http\Controllers\CPLController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -66,6 +68,13 @@ Route::middleware('auth')->group(function () {
         Route::patch('/visiprodi/{id}/update', [VisiMisiProdiController::class, 'update'])->name('visiprodi.update');
         Route::delete('/visiprodi/{id}/destroy', [VisiMisiProdiController::class, 'destroy'])->name('visiprodi.destroy');
     });
+
+    // PROFIL LULUSAN
+    Route::get('/profil-lulusan', [ProfilLulusanController::class, 'index'])->name('profil-lulusan.index')->middleware('auth');
+
+
+    // CPL
+    Route::get('/cpl', [CPLController::class, 'index'])->name('cpl.index');
 });
 
 require __DIR__ . '/auth.php';

@@ -7,11 +7,20 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <a href="{{ route('visifakultas.create') }}"
-                class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg text-white font-bold">Tambah Visi & Misi</a>
+
+            {{-- Tombol Create (Hanya untuk Dekan) --}}
+            @if (auth()->user()->role === 'dekan')
+                <a href="{{ route('visifakultas.create') }}"
+                    class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg text-white font-bold">
+                    Tambah Visi & Misi
+                </a>
+            @endif
+
             <div class="max-h-screen overflow-y-auto shadow-sm sm:rounded-lg p-2 scroll-custom">
+
                 @foreach ($data_visi as $visi)
-                    <div class="w-full h-auto border border-black flex flex-row p-4 bg-white rounded-lg mb-4">
+                    <div class="w-full border border-black flex flex-row p-4 bg-white rounded-lg mb-4">
+
                         {{-- Left --}}
                         <div class="w-5/6 h-80 overflow-y-auto p-4 border-r scroll-custom">
                             {{-- Visi --}}
@@ -30,43 +39,51 @@
                                 </ul>
                             </div>
                         </div>
-                        {{-- Right --}}
-                        <div class="w-1/4 h-auto py-2 px-4 font-bold gap-4 flex flex-col">
-                            <p>Berlaku Sampai <br> {{ $visi->berlaku_sampai }}</p>
-                            <p>Aksi</p>
-                            <div class="flex flex-row gap-4">
-                                {{-- Edit Icon --}}
-                                <a href="{{ route('visifakultas.edit', $visi->id) }}"
-                                    class=" 
-        @if (auth()->user()->role !== 'dekan') pointer-events-none opacity-50 cursor-not-allowed @endif
-    ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                </a>
 
-                                {{-- Delete Button --}}
-                                <form action="{{ route('visifakultas.destroy', $visi->id) }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="button" @disabled(auth()->user()->role !== 'dekan')
-                                        class="confirm-delete disabled:opacity-50 disabled:cursor-not-allowed">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
+                        {{-- Right --}}
+                        <div class="w-1/4 h-auto py-2 px-4 font-bold flex flex-col gap-4">
+
+                            <p>Berlaku Sampai <br> {{ $visi->berlaku_sampai }}</p>
+
+                            {{-- Aksi (Hanya untuk Dekan) --}}
+                            @if (auth()->user()->role === 'dekan')
+                                <p>Aksi</p>
+
+                                <div class="flex flex-row gap-4">
+
+                                    {{-- Edit --}}
+                                    <a href="{{ route('visifakultas.edit', $visi->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
-                                    </button>
-                                </form>
-                            </div>
+                                    </a>
+
+                                    {{-- Delete --}}
+                                    <form action="{{ route('visifakultas.destroy', $visi->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="button" class="confirm-delete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+
+                            {{-- Dokumen --}}
                             <div class="space-y-3 font-bold">
                                 <p>Dokumen</p>
                                 <div>
                                     @if ($visi->file_path)
                                         <a href="{{ asset('storage/' . $visi->file_path) }}" target="_blank"
-                                            class="px-4 py-1 bg-purple-500 rounded-full inline-block text-white">visi_{{ $loop->iteration }}.pdf
+                                            class="px-4 py-1 bg-purple-500 rounded-full inline-block text-white">
+                                            visi_{{ $loop->iteration }}.pdf
                                         </a>
                                     @else
                                         <p class="text-red-500">Tidak ada dokumen</p>
@@ -74,7 +91,10 @@
                                 </div>
                             </div>
                         </div>
+
+                    </div>
                 @endforeach
+
             </div>
         </div>
     </div>
@@ -83,30 +103,11 @@
     <script>
         (function() {
             function handleDeleteClick(event) {
-                const btn = event.currentTarget;
-
-                // Jika tombol disabled (dari Blade)
-                if (btn.hasAttribute('disabled')) {
-                    event.preventDefault();
-                    return false;
-                }
-
-                // Konfirmasi
                 const ok = confirm('Apakah anda yakin ingin menghapus item ini?');
-                if (!ok) {
-                    event.preventDefault();
-                    return false;
-                }
+                if (!ok) event.preventDefault();
 
-                // Jika ada form induk submit form
-                const form = btn.closest('form');
-                if (form) {
-                    event.preventDefault();
-                    form.submit();
-                    return true;
-                }
-
-                return true;
+                const form = event.currentTarget.closest('form');
+                if (ok && form) form.submit();
             }
 
             document.addEventListener('DOMContentLoaded', () => {
@@ -115,7 +116,5 @@
             });
         })();
     </script>
-    </div>
-    </div>
-    </div>
+
 </x-app-layout>
