@@ -8,6 +8,6 @@ class CPLController extends Controller
 {
     public function index()
     {
-        return view('cpl.index'); // nanti buat file view ini
+        return view('cpl.index');
     }
 }

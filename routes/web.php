@@ -24,6 +24,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/visiinstitusi', [VisiMisiInstitusiController::class, 'index'])->name('visiinstitusi.index');
     Route::get('/visiprodi', [VisiMisiProdiController::class, 'index'])->name('visiprodi.index');
 
+    Route::get('visimisiprodi/visi/create', [VisiMisiProdiController::class, 'create_visi'])->name('visiprodi.create_visi');
+    Route::post('visimisiprodi/visi/store', [VisiMisiProdiController::class, 'store_visi'])->name('visiprodi.store_visi');
+    Route::get('visimisiprodi/visi/edit/{id}', [VisiMisiProdiController::class, 'edit_visi'])->name('visiprodi.edit_visi');
+    Route::put('visimisiprodi/visi/update/{id}', [VisiMisiProdiController::class, 'update_visi'])->name('visiprodi.update_visi');
+    Route::delete('visimisiprodi/visi/destroy/{id}', [VisiMisiProdiController::class, 'hapus_visi'])->name('visiprodi.hapus_visi');
+
+    Route::get('visimisiprodi/misi/create', [VisiMisiProdiController::class, 'create_misi'])->name('visiprodi.create_misi');
+    Route::post('visimisiprodi/misi/store', [VisiMisiProdiController::class, 'store_misi'])->name('visiprodi.store_misi');
+    Route::get('visimisiprodi/misi/edit/{id}', [VisiMisiProdiController::class, 'edit_misi'])->name('visiprodi.edit_misi');
+    Route::put('visimisiprodi/misi/update/{id}', [VisiMisiProdiController::class, 'update_misi'])->name('visiprodi.update_misi');
+    Route::delete('visimisiprodi/misi/destroy/{id}', [VisiMisiProdiController::class, 'hapus_misi'])->name('visiprodi.hapus_misi');
+
     // API VISI MISI INSTITUSI
     Route::post('/visiinstitusi/misi/ajax-store', [VisiMisiInstitusiController::class, 'storeMisiAjax'])
         ->name('visiinstitusi.misi.ajax.store');
@@ -69,8 +81,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/visiprodi/{id}/destroy', [VisiMisiProdiController::class, 'destroy'])->name('visiprodi.destroy');
     });
 
-    // PROFIL LULUSAN
-    Route::get('/profil-lulusan', [ProfilLulusanController::class, 'index'])->name('profil-lulusan.index')->middleware('auth');
+    // PROFIL LULUSAN - Resource Route
+    Route::get('profil-lulusan/get-misi/{visiId}', [ProfilLulusanController::class, 'getMisiByVisi'])->name('profil-lulusan.get-misi');
+
+    Route::resource('profil-lulusan', ProfilLulusanController::class);
+    // Tambahkan route untuk API
 
 
     // CPL
