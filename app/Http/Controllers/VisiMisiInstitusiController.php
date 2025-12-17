@@ -3,99 +3,81 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\VisiMisiInstitusi; // <-- WAJIB TAMBAHKAN
+use App\Models\VisiInstitusi;
+use App\Models\MisiInstitusi;
 use Illuminate\Support\Facades\Storage;
 
 class VisiMisiInstitusiController extends Controller
 {
     public function index()
     {
-        $data_visi = VisiMisiInstitusi::where('jenis', 'visi')->with("children")->get();
-        return view('visi.institusi', compact('data_visi'));
+        $visi = VisiInstitusi::all();
+        $misi = MisiInstitusi::all();
+
+        return view('visi.institusi', compact('visi', 'misi'));
     }
 
-    public function create()
+    public function create_visi()
     {
-        $data_misi = VisiMisiInstitusi::where('jenis', 'misi')->get();
-        return view('visi.institusi.createvisiinstitusi', compact('data_misi'));
+        return view('visi.institusi.create_visi');
     }
 
-    public function store(Request $request)
+    public function edit_visi($id)
     {
-        // Validate VISI
-        $validate = $request->validate([
-            'visimisi' => 'required|string',
-            'jenis' => 'required|in:visi,misi',
-            'dokumen' => 'nullable|mimes:pdf|max:2048',
+        $item = VisiInstitusi::findOrFail($id);
+        return view('visi.institusi.edit_visi', compact('item'));
+    }
+
+    public function store_visi(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'visi' => 'required|string',
             'berlaku_sampai' => 'nullable|date',
-            'misi_ids' => 'nullable|array',
         ]);
 
-        // Upload dokumen
-        $path = $request->file('dokumen')?->store('dokumen', 'public');
-        $validate['file_path'] = $path;
-
-        $visi = VisiMisiInstitusi::create($validate);
-
-        // Simpan relasi misi → visi
-        if ($request->filled('misi_ids')) {
-            foreach ($request->misi_ids as $mid) {
-                VisiMisiInstitusi::where('id', $mid)->update([
-                    'parent_id' => $visi->id
-                ]);
-            }
+        if ($request->hasFile('dokumen')) {
+            $path = $request->file('dokumen')->store('dokumen', 'public');
+        } else {
+            $path = null;
         }
+
+        VisiInstitusi::create([
+            'visi' => $request->visi,
+            'file_path' => $path,
+            'berlaku_sampai' => $request->input('berlaku_sampai'),
+        ]);
 
         return redirect()->route('visiinstitusi.index');
     }
 
-    public function edit($id)
+    public function update_visi(Request $request, $id)
     {
-        $item = VisiMisiInstitusi::with('children')->findOrFail($id);
-        $data_misi = VisiMisiInstitusi::where('jenis', 'misi')->get(); // semua misi
-        return view('visi.institusi.editvisiinstitusi', compact('item', 'data_misi'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $validate = $request->validate([
-            'visimisi' => 'required|string',
-            'jenis' => 'required|in:visi,misi',
-            'dokumen' => 'nullable|mimes:pdf|max:2048',
+        $request->validate([
+            'visi' => 'required|string',
             'berlaku_sampai' => 'nullable|date',
-            'misi_ids' => 'nullable|array',
         ]);
 
-        $item = VisiMisiInstitusi::findOrFail($id);
+        $item = VisiInstitusi::findOrFail($id);
 
-        // Perbarui file
         if ($request->hasFile('dokumen')) {
-
             if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
                 Storage::disk('public')->delete($item->file_path);
             }
-
             $path = $request->file('dokumen')->store('dokumen', 'public');
-            $validate['file_path'] = $path;
+            $item->file_path = $path;
         }
 
-        // Update data utama
-        $item->update($validate);
-
-        VisiMisiInstitusi::where('parent_id', $id)->update(['parent_id' => null]);
-
-        if ($request->filled('misi_ids')) {
-            VisiMisiInstitusi::whereIn('id', $request->misi_ids)
-                ->update(['parent_id' => $id]);
-        }
+        $item->visi = $request->visi;
+        $item->berlaku_sampai = $request->input('berlaku_sampai');
+        $item->save();
 
         return redirect()->route('visiinstitusi.index');
     }
 
-
-    public function destroy($id)
+    public function hapus_visi($id)
     {
-        $item = VisiMisiInstitusi::findOrFail($id);
+        $item = VisiInstitusi::findOrFail($id);
 
         if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
             Storage::disk('public')->delete($item->file_path);
@@ -105,27 +87,95 @@ class VisiMisiInstitusiController extends Controller
         return redirect()->route('visiinstitusi.index');
     }
 
-    public function storeMisiAjax(Request $request)
+    /**
+     * Semua fungsi untuk CRUD VISI
+     */
+
+    public function create_misi()
     {
-        $validate = $request->validate([
-            'visimisi' => 'required|string',
-        ]);
-
-        $data = VisiMisiInstitusi::create([
-            'visimisi' => $validate['visimisi'],
-            'jenis' => 'misi'
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'data' => $data
-        ]);
+        $visi = VisiInstitusi::all();
+        return view('visi.institusi.create_misi', compact('visi'));
     }
 
-    public function getAllMisi()
+    public function edit_misi($id)
     {
-        return VisiMisiInstitusi::where('jenis', 'misi')
-            ->select('id', 'visimisi')
-            ->get();
+        $item = MisiInstitusi::findOrFail($id);
+        $visi = VisiInstitusi::all();
+
+        return view('visi.institusi.edit_misi', compact('item', 'visi'));
+    }
+
+    public function store_misi(Request $request)
+    {
+        $request->validate([
+            'visi_institusi_id' => 'required|exists:visi_institusis,id',
+            'misi' => 'required|string',
+            'berlaku_sampai' => 'nullable|date',
+        ]);
+
+        if ($request->hasFile('dokumen')) {
+            $path = $request->file('dokumen')->store('dokumen', 'public');
+        } else {
+            $path = null;
+        }
+
+        MisiInstitusi::create([
+            'visi_institusi_id' => $request->visi_institusi_id,
+            'misi' => $request->misi,
+            'file_path' => $path,
+            'berlaku_sampai' => $request->input('berlaku_sampai'),
+        ]);
+
+        return redirect()->route('visiinstitusi.index');
+    }
+
+    public function update_misi(Request $request, $id)
+    {
+        $request->validate([
+            'visi_institusi_id' => 'required|exists:visi_institusis,id',
+            'misi' => 'required|string',
+            'dokumen' => 'nullable|file|mimes:pdf|max:5120',
+            'berlaku_sampai' => 'required|date',
+        ], [
+            'visi_institusi_id.required' => 'Visi harus dipilih',
+            'visi_institusi_id.exists' => 'Visi yang dipilih tidak valid',
+            'misi.required' => 'Misi harus diisi',
+            'berlaku_sampai.required' => 'Tanggal berlaku sampai harus diisi',
+        ]);
+
+        $misi = MisiInstitusi::findOrFail($id);
+
+        $data = [
+            'visi_institusi_id' => $request->visi_institusi_id,
+            'misi' => $request->misi,
+            'berlaku_sampai' => $request->berlaku_sampai,
+        ];
+
+        if ($request->hasFile('dokumen')) {
+            if ($misi->file_path && Storage::disk('public')->exists($misi->file_path)) {
+                Storage::disk('public')->delete($misi->file_path);
+            }
+
+            $data['file_path'] = $request->file('dokumen')->store('misi-institusi', 'public');
+        }
+
+        $misi->update($data);
+
+        return redirect()->route('visiinstitusi.index')
+            ->with('success', 'Misi berhasil diperbarui');
+    }
+
+    public function hapus_misi($id)
+    {
+        $item = MisiInstitusi::findOrFail($id);
+
+        if ($item->file_path && Storage::disk('public')->exists($item->file_path)) {
+            Storage::disk('public')->delete($item->file_path);
+        }
+
+        $item->delete();
+
+        return redirect()->route('visiinstitusi.index')
+            ->with('success', 'Misi berhasil dihapus');
     }
 }

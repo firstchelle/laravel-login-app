@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visi_misi_institusis', function (Blueprint $table) {
+        Schema::create('misi_fakultas', function (Blueprint $table) {
             $table->id();
-            $table->text('visimisi');
-            $table->enum("jenis", ["visi", "misi"]);
+            $table->text('misi');
             $table->text('file_path')->nullable();
             $table->date('berlaku_sampai')->nullable();
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('visi_misi_institusis')->onDelete('set null');
+            $table->foreignId('visi_fakultas_id')->constrained('visi_fakultas')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visi_misi_institusis');
+        Schema::dropIfExists('misi_fakultas');
     }
 };

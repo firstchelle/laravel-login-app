@@ -24,18 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/visiinstitusi', [VisiMisiInstitusiController::class, 'index'])->name('visiinstitusi.index');
     Route::get('/visiprodi', [VisiMisiProdiController::class, 'index'])->name('visiprodi.index');
 
-    Route::get('visimisiprodi/visi/create', [VisiMisiProdiController::class, 'create_visi'])->name('visiprodi.create_visi');
-    Route::post('visimisiprodi/visi/store', [VisiMisiProdiController::class, 'store_visi'])->name('visiprodi.store_visi');
-    Route::get('visimisiprodi/visi/edit/{id}', [VisiMisiProdiController::class, 'edit_visi'])->name('visiprodi.edit_visi');
-    Route::put('visimisiprodi/visi/update/{id}', [VisiMisiProdiController::class, 'update_visi'])->name('visiprodi.update_visi');
-    Route::delete('visimisiprodi/visi/destroy/{id}', [VisiMisiProdiController::class, 'hapus_visi'])->name('visiprodi.hapus_visi');
-
-    Route::get('visimisiprodi/misi/create', [VisiMisiProdiController::class, 'create_misi'])->name('visiprodi.create_misi');
-    Route::post('visimisiprodi/misi/store', [VisiMisiProdiController::class, 'store_misi'])->name('visiprodi.store_misi');
-    Route::get('visimisiprodi/misi/edit/{id}', [VisiMisiProdiController::class, 'edit_misi'])->name('visiprodi.edit_misi');
-    Route::put('visimisiprodi/misi/update/{id}', [VisiMisiProdiController::class, 'update_misi'])->name('visiprodi.update_misi');
-    Route::delete('visimisiprodi/misi/destroy/{id}', [VisiMisiProdiController::class, 'hapus_misi'])->name('visiprodi.hapus_misi');
-
     // API VISI MISI INSTITUSI
     Route::post('/visiinstitusi/misi/ajax-store', [VisiMisiInstitusiController::class, 'storeMisiAjax'])
         ->name('visiinstitusi.misi.ajax.store');
@@ -56,29 +44,53 @@ Route::middleware('auth')->group(function () {
 
     // VISI MISI INSTITUSI
     Route::group(['middleware' => ['role:rektor']], function () {
-        Route::get('/visiinstitusi/create', [VisiMisiInstitusiController::class, 'create'])->name('visiinstitusi.create');
-        Route::post('/visiinstitusi/store', [VisiMisiInstitusiController::class, 'store'])->name('visiinstitusi.store');
-        Route::get('/visiinstitusi/{id}/edit', [VisiMisiInstitusiController::class, 'edit'])->name('visiinstitusi.edit');
-        Route::patch('/visiinstitusi/{id}/update', [VisiMisiInstitusiController::class, 'update'])->name('visiinstitusi.update');
-        Route::delete('/visiinstitusi/{id}/destroy', [VisiMisiInstitusiController::class, 'destroy'])->name('visiinstitusi.destroy');
+        // VISI INSTITUSI
+        Route::get('visimisiinstitusi/visi/create', [VisiMisiInstitusiController::class, 'create_visi'])->name('visiinstitusi.create_visi');
+        Route::post('visimisiinstitusi/visi/store', [VisiMisiInstitusiController::class, 'store_visi'])->name('visiinstitusi.store_visi');
+        Route::get('visimisiinstitusi/visi/edit/{id}', [VisiMisiInstitusiController::class, 'edit_visi'])->name('visiinstitusi.edit_visi');
+        Route::put('visimisiinstitusi/visi/update/{id}', [VisiMisiInstitusiController::class, 'update_visi'])->name('visiinstitusi.update_visi');
+        Route::delete('visimisiinstitusi/visi/destroy/{id}', [VisiMisiInstitusiController::class, 'hapus_visi'])->name('visiinstitusi.hapus_visi');
+
+        // MISI INSTITUSI
+        Route::get('visimisiinstitusi/misi/create', [VisiMisiInstitusiController::class, 'create_misi'])->name('visiinstitusi.create_misi');
+        Route::post('visimisiinstitusi/misi/store', [VisiMisiInstitusiController::class, 'store_misi'])->name('visiinstitusi.store_misi');
+        Route::get('visimisiinstitusi/misi/edit/{id}', [VisiMisiInstitusiController::class, 'edit_misi'])->name('visiinstitusi.edit_misi');
+        Route::put('visimisiinstitusi/misi/update/{id}', [VisiMisiInstitusiController::class, 'update_misi'])->name('visiinstitusi.update_misi');
+        Route::delete('visimisiinstitusi/misi/destroy/{id}', [VisiMisiInstitusiController::class, 'hapus_misi'])->name('visiinstitusi.hapus_misi');
     });
 
     // VISI MISI FAKULTAS
     Route::group(['middleware' => ['role:dekan']], function () {
-        Route::get('/visifakultas/create', [VisiMisiFakultasController::class, 'create'])->name('visifakultas.create');
-        Route::post('/visifakultas/store', [VisiMisiFakultasController::class, 'store'])->name('visifakultas.store');
-        Route::get('/visifakultas/{id}/edit', [VisiMisiFakultasController::class, 'edit'])->name('visifakultas.edit');
-        Route::patch('/visifakultas/{id}/update', [VisiMisiFakultasController::class, 'update'])->name('visifakultas.update');
-        Route::delete('/visifakultas/{id}/destroy', [VisiMisiFakultasController::class, 'destroy'])->name('visifakultas.destroy');
+        // VISI FAKULTAS
+        Route::get('visimisifakultas/visi/create', [VisiMisiFakultasController::class, 'create_visi'])->name('visifakultas.create_visi');
+        Route::post('visimisifakultas/visi/store', [VisiMisiFakultasController::class, 'store_visi'])->name('visifakultas.store_visi');
+        Route::get('visimisifakultas/visi/edit/{id}', [VisiMisiFakultasController::class, 'edit_visi'])->name('visifakultas.edit_visi');
+        Route::put('visimisifakultas/visi/update/{id}', [VisiMisiFakultasController::class, 'update_visi'])->name('visifakultas.update_visi');
+        Route::delete('visimisifakultas/visi/destroy/{id}', [VisiMisiFakultasController::class, 'hapus_visi'])->name('visifakultas.hapus_visi');
+
+        // MISI FAKULTAS
+        Route::get('visimisifakultas/misi/create', [VisiMisiFakultasController::class, 'create_misi'])->name('visifakultas.create_misi');
+        Route::post('visimisifakultas/misi/store', [VisiMisiFakultasController::class, 'store_misi'])->name('visifakultas.store_misi');
+        Route::get('visimisifakultas/misi/edit/{id}', [VisiMisiFakultasController::class, 'edit_misi'])->name('visifakultas.edit_misi');
+        Route::put('visimisifakultas/misi/update/{id}', [VisiMisiFakultasController::class, 'update_misi'])->name('visifakultas.update_misi');
+        Route::delete('visimisifakultas/misi/destroy/{id}', [VisiMisiFakultasController::class, 'hapus_misi'])->name('visifakultas.hapus_misi');
     });
 
     // VISI MISI PRODI
     Route::group(['middleware' => ['role:kaprodi']], function () {
-        Route::get('/visiprodi/create', [VisiMisiProdiController::class, 'create'])->name('visiprodi.create');
-        Route::post('/visiprodi/store', [VisiMisiProdiController::class, 'store'])->name('visiprodi.store');
-        Route::get('/visiprodi/{id}/edit', [VisiMisiProdiController::class, 'edit'])->name('visiprodi.edit');
-        Route::patch('/visiprodi/{id}/update', [VisiMisiProdiController::class, 'update'])->name('visiprodi.update');
-        Route::delete('/visiprodi/{id}/destroy', [VisiMisiProdiController::class, 'destroy'])->name('visiprodi.destroy');
+        // VISI PRODI
+        Route::get('visimisiprodi/visi/create', [VisiMisiProdiController::class, 'create_visi'])->name('visiprodi.create_visi');
+        Route::post('visimisiprodi/visi/store', [VisiMisiProdiController::class, 'store_visi'])->name('visiprodi.store_visi');
+        Route::get('visimisiprodi/visi/edit/{id}', [VisiMisiProdiController::class, 'edit_visi'])->name('visiprodi.edit_visi');
+        Route::put('visimisiprodi/visi/update/{id}', [VisiMisiProdiController::class, 'update_visi'])->name('visiprodi.update_visi');
+        Route::delete('visimisiprodi/visi/destroy/{id}', [VisiMisiProdiController::class, 'hapus_visi'])->name('visiprodi.hapus_visi');
+
+        // MISI PRODI
+        Route::get('visimisiprodi/misi/create', [VisiMisiProdiController::class, 'create_misi'])->name('visiprodi.create_misi');
+        Route::post('visimisiprodi/misi/store', [VisiMisiProdiController::class, 'store_misi'])->name('visiprodi.store_misi');
+        Route::get('visimisiprodi/misi/edit/{id}', [VisiMisiProdiController::class, 'edit_misi'])->name('visiprodi.edit_misi');
+        Route::put('visimisiprodi/misi/update/{id}', [VisiMisiProdiController::class, 'update_misi'])->name('visiprodi.update_misi');
+        Route::delete('visimisiprodi/misi/destroy/{id}', [VisiMisiProdiController::class, 'hapus_misi'])->name('visiprodi.hapus_misi');
     });
 
     // PROFIL LULUSAN - Resource Route
