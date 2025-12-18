@@ -31,4 +31,10 @@ class ProfilLulusan extends Model
     {
         return $this->belongsTo(MisiProdi::class, 'misi_prodi_id');
     }
+
+    public function capaianProfilLulusans()
+    {
+        return $this->hasMany(CapaianProfilLulusan::class, 'profil_lulusan_id');
+    }
+
 }

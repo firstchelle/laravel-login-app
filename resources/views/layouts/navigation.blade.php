@@ -41,7 +41,7 @@
                     </x-nav-link>
 
                     <!-- Capaian Profil Lulusan Link -->
-                    <x-nav-link :href="route('cpl.index')" :active="request()->routeIs('cpl.index')">
+                    <x-nav-link :href="route('capaian.index')" :active="request()->routeIs('capaian.index')">
                         {{ __('Capaian Profil Lulusan') }}
                     </x-nav-link>
                 </div>
@@ -130,7 +130,7 @@
             </x-responsive-nav-link>
 
             <!-- Capaian Profil Lulusan Mobile -->
-            <x-responsive-nav-link :href="route('cpl.index')" :active="request()->routeIs('cpl.index')">
+            <x-responsive-nav-link :href="route('capaian.index')" :active="request()->routeIs('capaian.index')">
                 {{ __('Capaian Profil Lulusan') }}
             </x-responsive-nav-link>
         </div>

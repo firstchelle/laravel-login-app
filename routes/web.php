@@ -5,7 +5,7 @@ use App\Http\Controllers\VisiMisiFakultasController;
 use App\Http\Controllers\VisiMisiInstitusiController;
 use App\Http\Controllers\VisiMisiProdiController;
 use App\Http\Controllers\ProfilLulusanController;
-use App\Http\Controllers\CPLController;
+use App\Http\Controllers\CapaianProfilLulusanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -100,8 +100,13 @@ Route::middleware('auth')->group(function () {
     // Tambahkan route untuk API
 
 
-    // CPL
-    Route::get('/cpl', [CPLController::class, 'index'])->name('cpl.index');
+    // CPL - Resource Route
+    Route::resource('capaian', CapaianProfilLulusanController::class);
+
+    // Jika butuh API tambahan (misalnya ambil data CPL by Profil Lulusan)
+    Route::get('capaian/by-profil/{profilId}', [CapaianProfilLulusanController::class, 'getByProfil'])
+        ->name('capaian.by-profil');
+
 });
 
 require __DIR__ . '/auth.php';
