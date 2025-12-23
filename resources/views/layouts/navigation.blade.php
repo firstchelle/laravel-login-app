@@ -56,7 +56,7 @@
 
             <x-nav-link :href="route('capaian.index')" :active="request()->routeIs('capaian.index')" 
                         class="sidebar-link text-white hover:bg-gray-700 hover:text-white hover:underline focus:text-white active:text-white">
-                Capaian Profil Lulusan
+                Capaian Pembelajaran Lulusan
             </x-nav-link>
         </nav>
 
