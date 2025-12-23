@@ -16,6 +16,32 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        
+        $this->ensureIsNotRateLimited();
+
+        // Check if the user exists by email
+        $user = \App\Models\User::where('email', $this->email)->first();
+
+        if (! $user) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => 'This email does not exist.',
+            ]);
+        }
+
+        // Check if the password is correct
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'Incorrect password.',
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+
+
         return true;
     }
 
@@ -46,6 +72,7 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+                'password' => trans('auth.failed'),
             ]);
         }
 

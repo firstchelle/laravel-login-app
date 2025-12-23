@@ -1,0 +1,166 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body background with custom gradient */
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+
+    /* Gradient using your chosen colors */
+    background: linear-gradient(135deg, 
+        #332D56 0%,   /* deep purple */
+        #4E6688 50%,  /* muted blue-gray */
+        #71C0BB 100%  /* teal aqua */
+    );
+
+    background-size: cover;
+}
+
+/* Login container */
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    perspective: 1000px;
+}
+
+/* Glassmorphism card */
+.login-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff; /* solid white */
+}
+
+.login-header p {
+    color: #ffffff; /* solid white for consistency */
+    font-size: 1rem;
+}
+
+/* Inputs */
+.form-group {
+    margin-bottom: 24px;
+}
+.input-wrapper input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    color: white;
+    width: 100%;
+    outline: none;
+    backdrop-filter: blur(10px);
+}
+.input-wrapper label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* Button */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+
+    /* Gradient background with your colors */
+    background-color: #1f2937;
+    
+    color: #ffffff;   /* solid white text */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Error bubble styling */
+.error-message {
+    display: inline-block;
+    background: #ff4d4f;        /* red bubble */
+    color: #fff;                /* white text */
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    border-radius: 20px;        /* rounded bubble */
+    margin-top: 10px;
+    text-align: center;
+    list-style: none;           /* removes the dot */
+    animation: popUp 0.4s ease forwards;
+}
+
+/* Pop-up animation */
+@keyframes popUp {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.error-message li {
+    list-style: none;
+}
+
+.login-card.error {
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+}
+
+/* Logo wrapper above the card */
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* space between logo and card */
+}
+
+/* Logo image styling */
+.logo-img {
+    height: 48px;   /* adjust size */
+    width: 48px;
+    border-radius: 50%; /* circular crop */
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.6); /* soft glow */
+}

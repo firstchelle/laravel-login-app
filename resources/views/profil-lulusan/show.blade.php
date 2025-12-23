@@ -115,21 +115,23 @@
                         </div>
 
                         {{-- Action Buttons --}}
-                        <div class="flex gap-3 pt-4 border-t">
-                            <a href="{{ route('profil-lulusan.edit', $profilLulusan->id) }}"
-                                class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition duration-200">
-                                Edit Profil
-                            </a>
-                            <form action="{{ route('profil-lulusan.destroy', $profilLulusan->id) }}" method="POST"
-                                class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button"
-                                    class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition duration-200 confirm-delete">
-                                    Hapus Profil
-                                </button>
-                            </form>
-                        </div>
+                        @if(auth()->user()->role === 'kaprodi')
+                            <div class="flex gap-3 pt-4 border-t">
+                                <a href="{{ route('profil-lulusan.edit', $profilLulusan->id) }}"
+                                    class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition duration-200">
+                                    Edit Profil
+                                </a>
+                                <form action="{{ route('profil-lulusan.destroy', $profilLulusan->id) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button"
+                                        class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition duration-200 confirm-delete">
+                                        Hapus Profil
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

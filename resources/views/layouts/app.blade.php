@@ -15,40 +15,47 @@
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Scripts -->
+    <!-- Tailwind + App Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Stack untuk custom styles --}}
+    <!-- Custom Sidebar CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
     @stack('styles')
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        @include('layouts.navigation') <!-- This is your custom sidebar -->
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
+        <!-- Main Content -->
+        <div class="flex-1 ml-64 p-6 bg-gray-100">
+            <!-- Header Slot -->
+            @isset($header)
+                @if (!request()->routeIs('dashboard'))
+                        <header class="bg-white shadow mb-6">
+                            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </header>
+                @endif
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+            @endisset
+
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 
-    <!-- jQuery (harus sebelum Select2) -->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    {{-- Stack untuk custom scripts --}}
     @stack('scripts')
 </body>
-
 </html>

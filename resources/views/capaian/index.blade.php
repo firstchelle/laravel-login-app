@@ -6,7 +6,7 @@
 
                     {{-- Header --}}
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800">Daftar Capaian Profil Lulusan</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">Daftar Capaian Pembelajaran Lulusan</h2>
 
                         @if(auth()->user()->role === 'kaprodi')
                             <a href="{{ route('capaian.create') }}"
@@ -31,7 +31,7 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">No</th>
-                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Capaian Profil Lulusan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Capaian Pembelajaran Lulusan</th>
                                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Deskripsi</th>
                                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Profil Lulusan</th>
                                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Nama Dosen</th>
@@ -90,7 +90,7 @@
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex justify-center gap-3">
-                                                @if(auth()->user()->role === 'kaprodi')
+                                                
                                                     {{-- Detail CPL --}}
                                                     <a href="{{ route('capaian.show', $item->id) }}"
                                                        class="text-blue-600 hover:text-blue-900 transition duration-200"
@@ -104,6 +104,7 @@
                                                         </svg>
                                                     </a>
 
+                                                    @if(auth()->user()->role === 'kaprodi')
                                                     {{-- Edit --}}
                                                     <a href="{{ route('capaian.edit', $item->id) }}"
                                                        class="text-yellow-600 hover:text-yellow-900 transition duration-200"
@@ -143,7 +144,7 @@
                                                           stroke-width="2"
                                                           d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                 </svg>
-                                                <p class="text-lg font-medium">Belum ada data capaian profil lulusan</p>
+                                                <p class="text-lg font-medium">Belum ada data capaian pembelajaran lulusan</p>
                                                 @if(auth()->user()->role === 'kaprodi')
                                                     <a href="{{ route('capaian.create') }}"
                                                        class="mt-3 text-blue-600 hover:text-blue-800 font-semibold">

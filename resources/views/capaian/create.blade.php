@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-4xl mx-auto bg-white shadow-sm sm:rounded-lg p-6">
-            <p class="text-lg font-bold border border-black px-6 py-2 w-fit rounded-lg mb-6">CAPAIAN PROFIL LULUSAN</p>
+            <p class="text-lg font-bold border border-black px-6 py-2 w-fit rounded-lg mb-6">CAPAIAN PEMBELAJARAN LULUSAN</p>
 
             <form action="{{ route('capaian.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
@@ -40,11 +40,11 @@
                            value="{{ old('tanggal_dibuat') }}">
                 </div>
 
-                {{-- Capaian Profil Lulusan --}}
+                {{-- Capaian Pembelajaran Lulusan --}}
                 <div>
                     <label for="capaian_profil_lulusan" class="font-bold flex items-center gap-2">
-                        Capaian Profil Lulusan
-                        <span class="text-gray-400 text-sm cursor-help" title="Isi capaian profil lulusan">
+                        Capaian Pembelajaran Lulusan
+                        <span class="text-gray-400 text-sm cursor-help" title="Isi capaian pembelajaran lulusan">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                  viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -60,8 +60,8 @@
                 {{-- Deskripsi CPL --}}
                 <div>
                     <label for="deskripsi_capaian_profil_lulusan" class="font-bold flex items-center gap-2">
-                        Deskripsi Capaian Profil Lulusan
-                        <span class="text-gray-400 text-sm cursor-help" title="Deskripsi lengkap capaian profil lulusan">
+                        Deskripsi Capaian Pembelajaran Lulusan
+                        <span class="text-gray-400 text-sm cursor-help" title="Deskripsi lengkap capaian pembelajaran lulusan">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                  viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

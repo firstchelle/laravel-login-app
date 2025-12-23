@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-full h-auto flex flex-col p-4">
 
-                    <p class="px-16 py-3 border border-black w-fit rounded-lg">EDIT CAPAIAN PROFIL LULUSAN</p>
+                    <p class="px-16 py-3 border border-black w-fit rounded-lg">EDIT CAPAIAN PEMBELAJARAN LULUSAN</p>
 
                     {{-- Form --}}
                     <form action="{{ route('capaian.update', $cpl->id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-4 mt-4">
@@ -89,11 +89,11 @@
                             @enderror
                         </div>
 
-                        {{-- Capaian Profil Lulusan --}}
+                        {{-- Capaian Pembelajaran Lulusan --}}
                         <div class="flex flex-col gap-2">
                             <label for="capaian_profil_lulusan" class="font-bold flex items-center gap-2">
-                                Capaian Profil Lulusan <span class="text-red-500">*</span>
-                                <span class="text-gray-400 text-sm cursor-help" title="Isi capaian profil lulusan">
+                                Capaian Pembelajaran Lulusan <span class="text-red-500">*</span>
+                                <span class="text-gray-400 text-sm cursor-help" title="Isi capaian pembelajaran lulusan">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -113,7 +113,7 @@
                         <div class="flex flex-col gap-2">
                             <label for="deskripsi_capaian_profil_lulusan" class="font-bold flex items-center gap-2">
                                 Deskripsi CPL <span class="text-red-500">*</span>
-                                <span class="text-gray-400 text-sm cursor-help" title="Deskripsi lengkap capaian profil lulusan">
+                                <span class="text-gray-400 text-sm cursor-help" title="Deskripsi lengkap capaian pembelajaran lulusan">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

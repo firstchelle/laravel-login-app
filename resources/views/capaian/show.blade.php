@@ -6,7 +6,7 @@
 
                     {{-- Header --}}
                     <div class="flex justify-between items-center mb-6 pb-4 border-b">
-                        <h2 class="text-2xl font-bold text-gray-800">Detail Profil Lulusan</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">Detail Capaian Pembelajaran Lulusan</h2>
                         <a href="{{ route('capaian.index') }}"
                             class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200">
                             Kembali
@@ -78,20 +78,22 @@
                         </div>
 
                         {{-- Action Buttons --}}
-                        <div class="flex gap-3 pt-4 border-t">
-                            <a href="{{ route('capaian.edit', $cpl->id) }}"
-                                class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition duration-200">
-                                Edit Capaian
-                            </a>
-                            <form action="{{ route('capaian.destroy', $cpl->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button"
-                                    class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition duration-200 confirm-delete">
-                                    Hapus Capaian
-                                </button>
-                            </form>
-                        </div>
+                        @if(auth()->user()->role === 'kaprodi')
+                            <div class="flex gap-3 pt-4 border-t">
+                                <a href="{{ route('capaian.edit', $cpl->id) }}"
+                                    class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition duration-200">
+                                    Edit Capaian
+                                </a>
+                                <form action="{{ route('capaian.destroy', $cpl->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button"
+                                        class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition duration-200 confirm-delete">
+                                        Hapus Capaian
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ use App\Http\Controllers\CapaianProfilLulusanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/login');
 });
 
 Route::get('/dashboard', function () {
